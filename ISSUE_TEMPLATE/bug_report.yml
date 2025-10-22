@@ -1,0 +1,56 @@
+name: 🐞 Bug Report
+description: Use this form to report an application malfunction.
+title: "BE|iOS|Android - [Bug]"
+labels: ["bug", "needs-triage"]
+type: Bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Problem Description
+        Please fill out the fields below to help us reproduce and fix the issue.
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Select the environment where the bug occurred.
+      options:
+        - DEV
+        - PROD
+    validations:
+      required: true
+
+  - type: input
+    id: app_version
+    attributes:
+      label: App Version
+      description: Enter the app version (required only if Environment = PROD)
+      placeholder: e.g., 2.3.1
+    validations:
+      required: false
+    if:
+      field: environment
+      equals: PROD
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Describe what happened and how to reproduce the issue.
+      placeholder: |
+        Steps to reproduce:
+        1. ...
+        2. ...
+        Expected result:
+        Actual result:
+    validations:
+      required: true
+
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or Logs (optional)
+      description: Add any screenshots, logs, or other details that might help.
+      placeholder: Paste logs, output, or screenshot links here.
