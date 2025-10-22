@@ -26,13 +26,10 @@ body:
     id: app_version
     attributes:
       label: App Version
-      description: Enter the app version (required only if Environment = PROD)
+      description: Enter the app version
       placeholder: e.g., 2.3.1
     validations:
       required: false
-    if:
-      field: environment
-      equals: PROD
 
   - type: textarea
     id: description
