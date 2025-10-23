@@ -1,7 +1,7 @@
 name: 🐞 Bug Report
 description: Use this form to report an application malfunction.
 title: "BE|iOS|Android - [Bug]"
-labels: ["bug", "needs-triage"]
+labels: ["bug"]
 type: Bug
 
 body:
@@ -10,6 +10,27 @@ body:
       value: |
         ## Problem Description
         Please fill out the fields below to help us reproduce and fix the issue.
+        
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Describe what happened and how to reproduce the issue.
+      placeholder: |
+        Steps to reproduce:
+        1. ...
+        2. ...
+        Expected result:
+        Actual result:
+    validations:
+      required: true
+      
+  - type: textarea
+    id: attachments
+    attributes:
+      label: Screenshots or Logs (optional)
+      description: Add any screenshots, logs, or other details that might help.
+      placeholder: Paste logs, output, or screenshot links here.
 
   - type: dropdown
     id: environment
@@ -30,24 +51,3 @@ body:
       placeholder: e.g., 2.3.1
     validations:
       required: false
-
-  - type: textarea
-    id: description
-    attributes:
-      label: Bug Description
-      description: Describe what happened and how to reproduce the issue.
-      placeholder: |
-        Steps to reproduce:
-        1. ...
-        2. ...
-        Expected result:
-        Actual result:
-    validations:
-      required: true
-
-  - type: textarea
-    id: attachments
-    attributes:
-      label: Screenshots or Logs (optional)
-      description: Add any screenshots, logs, or other details that might help.
-      placeholder: Paste logs, output, or screenshot links here.
