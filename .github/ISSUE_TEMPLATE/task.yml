@@ -11,7 +11,7 @@ body:
         ## Task Description
         Use this form to define a new task or subtask.
       
-   - type: textarea
+  - type: textarea
     id: description
     attributes:
       label: Task Details
