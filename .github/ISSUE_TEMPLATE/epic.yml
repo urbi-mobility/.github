@@ -16,7 +16,7 @@ body:
     id: description
     attributes:
       label: Description
-      description: Provide a detailed description of the Epic: objectives, context, expected outcomes.
+      description: Provide a detailed description of the Epic
       placeholder: |
         - Objective:
         - Why is this important:
