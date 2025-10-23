@@ -1,0 +1,26 @@
+name: 🧠 Epic
+description: Create a new Epic to group related features or tasks.
+title: "[Epic]: "
+labels: ["epic"]
+type: Epic
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Epic Overview
+        Use this form to describe a new Epic that groups multiple related tasks or features.
+        Provide the goals, context, and expected outcomes.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a detailed description of the Epic: objectives, context, expected outcomes.
+      placeholder: |
+        - Objective:
+        - Why is this important:
+        - Expected outcome:
+        - Dependencies or blockers:
+    validations:
+      required: true
