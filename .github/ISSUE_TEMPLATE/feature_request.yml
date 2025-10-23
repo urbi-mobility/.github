@@ -1,0 +1,49 @@
+name: ✨ Feature Request
+description: Suggest or describe a new feature or improvement.
+title: "[Feature]: "
+labels: ["feature"]
+type: Feature
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Feature Description
+        Please provide the details of the requested feature or improvement.
+        
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Details
+      description: Describe the functionality, purpose, and expected benefits of this feature.
+      placeholder: |
+        - What problem does this feature solve?
+        - How should it work?
+        - Expected outcome or impact.
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies (optional)
+      description: List any related issues, repositories, or external requirements.
+      placeholder: e.g., Depends on #123 or external API changes.
+
+  - type: input
+    id: label
+    attributes:
+      label: Label
+      description: Enter the main label or category for this feature.
+      placeholder: e.g., UI, Backend, API, Performance
+    validations:
+      required: true
+
+  - type: input
+    id: estimated_delivery
+    attributes:
+      label: Estimated Delivery Date
+      description: Optional — provide the expected completion or delivery date for this feature.
+      placeholder: e.g., 2025-11-15
+    validations:
+      required: false
