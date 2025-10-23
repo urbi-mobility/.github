@@ -28,22 +28,13 @@ body:
     attributes:
       label: Dependencies (optional)
       description: List any related issues, repositories, or external requirements.
-      placeholder: e.g., Depends on #123 or external API changes.
+      placeholder: e.g., Depends on #123.
 
   - type: input
-    id: label
+    id: estimated_time
     attributes:
-      label: Label
-      description: Enter the main label or category for this feature.
-      placeholder: e.g., UI, Backend, API, Performance
-    validations:
-      required: true
-
-  - type: input
-    id: estimated_delivery
-    attributes:
-      label: Estimated Delivery Date
-      description: Optional — provide the expected completion or delivery date for this feature.
-      placeholder: e.g., 2025-11-15
+      label: Estimated Time (days)
+      description: Optional — estimated duration or delivery timeline in days.
+      placeholder: e.g., 3
     validations:
       required: false

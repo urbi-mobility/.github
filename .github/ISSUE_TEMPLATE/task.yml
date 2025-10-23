@@ -1,0 +1,33 @@
+name: 🧩 Task
+description: Create a new task or sub-task for ongoing work.
+title: "[Task]: "
+labels: ["task"]
+type: Task
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Task Description
+        Use this form to define a new task or subtask.
+      
+   - type: textarea
+    id: description
+    attributes:
+      label: Task Details
+      description: Describe what needs to be done and expected outcome.
+      placeholder: |
+        - Objective:
+        - Expected outcome:
+        - Related files or dependencies:
+    validations:
+      required: true
+
+  - type: input
+    id: estimated_time
+    attributes:
+      label: Estimated Time (days)
+      description: Optional — estimated duration or delivery timeline in days.
+      placeholder: e.g., 3
+    validations:
+      required: false
