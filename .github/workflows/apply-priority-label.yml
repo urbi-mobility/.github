@@ -1,0 +1,159 @@
+name: Reusable - Apply priority label
+
+on:
+  workflow_call:
+    inputs:
+      repo-owner:
+        required: true
+        type: string
+      repo-name:
+        required: true
+        type: string
+      issue-number:
+        required: true
+        type: number
+    secrets:
+      token:
+        required: true
+
+permissions:
+  issues: write
+
+jobs:
+  apply-priority-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Apply priority label from issue form
+        uses: actions/github-script@v9
+        env:
+          TARGET_REPO_OWNER: ${{ inputs.repo-owner }}
+          TARGET_REPO_NAME: ${{ inputs.repo-name }}
+          ISSUE_NUMBER: ${{ inputs.issue-number }}
+        with:
+          github-token: ${{ secrets.token }}
+          script: |
+            const owner = process.env.TARGET_REPO_OWNER;
+            const repo = process.env.TARGET_REPO_NAME;
+            const issue_number = Number(process.env.ISSUE_NUMBER);
+
+            const priorityToLabel = {
+              "High": {
+                name: "High Priority",
+                color: "b60205",
+                description: "High priority issue"
+              },
+              "Medium": {
+                name: "Medium Priority",
+                color: "fbca04",
+                description: "Medium priority issue"
+              },
+              "Low": {
+                name: "Low Priority",
+                color: "0e8a16",
+                description: "Low priority issue"
+              }
+            };
+
+            const priorityLabels = Object.values(priorityToLabel).map(label => label.name);
+
+            const { data: issue } = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number
+            });
+
+            const body = issue.body || "";
+
+            const prioritySectionMatch = body.match(
+              /###\s*Priority\s*\r?\n+([\s\S]*?)(?=\r?\n###|\s*$)/i
+            );
+
+            if (!prioritySectionMatch) {
+              console.log("Priority section not found.");
+              return;
+            }
+
+            const selectedPriority = prioritySectionMatch[1]
+              .split(/\r?\n/)
+              .map(line => line.trim())
+              .find(line => line.length > 0 && !line.startsWith("<!--"));
+
+            const selectedLabel = priorityToLabel[selectedPriority];
+
+            if (!selectedLabel) {
+              console.log(`Invalid priority value: "${selectedPriority}".`);
+              return;
+            }
+
+            console.log(`Selected priority: ${selectedPriority}`);
+            console.log(`Label to apply: ${selectedLabel.name}`);
+
+            const repoLabels = await github.paginate(
+              github.rest.issues.listLabelsForRepo,
+              {
+                owner,
+                repo,
+                per_page: 100
+              }
+            );
+
+            const repoLabelNames = new Set(repoLabels.map(label => label.name));
+
+            for (const labelDefinition of Object.values(priorityToLabel)) {
+              if (!repoLabelNames.has(labelDefinition.name)) {
+                console.log(`Creating missing label: ${labelDefinition.name}`);
+
+                await github.rest.issues.createLabel({
+                  owner,
+                  repo,
+                  name: labelDefinition.name,
+                  color: labelDefinition.color,
+                  description: labelDefinition.description
+                }).catch(error => {
+                  if (error.status === 422) {
+                    console.log(`Label already exists or could not be created: ${labelDefinition.name}`);
+                  } else {
+                    throw error;
+                  }
+                });
+              }
+            }
+
+            const currentLabels = await github.paginate(
+              github.rest.issues.listLabelsOnIssue,
+              {
+                owner,
+                repo,
+                issue_number,
+                per_page: 100
+              }
+            );
+
+            const currentLabelNames = new Set(currentLabels.map(label => label.name));
+
+            for (const label of priorityLabels) {
+              if (label !== selectedLabel.name && currentLabelNames.has(label)) {
+                console.log(`Removing old priority label: ${label}`);
+
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number,
+                  name: label
+                });
+              }
+            }
+
+            if (!currentLabelNames.has(selectedLabel.name)) {
+              console.log(`Adding label: ${selectedLabel.name}`);
+
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number,
+                labels: [selectedLabel.name]
+              });
+            } else {
+              console.log(`Label already present: ${selectedLabel.name}`);
+            }
