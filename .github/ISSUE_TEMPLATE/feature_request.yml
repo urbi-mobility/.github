@@ -1,40 +1,44 @@
-name: ✨ Feature Request
-description: Suggest or describe a new feature or improvement.
-title: "[Feature]: "
-labels: ["feature"]
+name: 🌞 Feature
+description: "Suggest an idea for this project"
+title: "iOS / Android / BE – [featurename] short description"
 type: Feature
 
 body:
-  - type: markdown
-    attributes:
-      value: |
-        ## Feature Description
-        Please provide the details of the requested feature or improvement.
-        
   - type: textarea
-    id: description
+    id: feature-description
     attributes:
-      label: Feature Details
-      description: Describe the functionality, purpose, and expected benefits of this feature.
-      placeholder: |
-        - What problem does this feature solve?
-        - How should it work?
-        - Expected outcome or impact.
+      label: "Describe the feature"
+      description: "A clear description of what the feature is."
+      placeholder: "Describe the feature..."
     validations:
       required: true
 
   - type: textarea
-    id: dependencies
+    id: details
     attributes:
-      label: Dependencies (optional)
-      description: List any related issues, repositories, or external requirements.
-      placeholder: e.g., Depends on #123.
-
-  - type: input
-    id: estimated_time
-    attributes:
-      label: Estimated Time (days)
-      description: Optional — estimated duration or delivery timeline in days.
-      placeholder: e.g., 3
+      label: "Dependencies and details about the feature"
+      description: "List any related issues, repositories, or external requirements. Link design, behaviour, expected interactions..."
+      placeholder: "E.g. Depends on"
     validations:
       required: false
+
+  - type: textarea
+    id: estimated-time
+    attributes:
+      label: "Estimated time"
+      description: "How long might it take you?"
+      placeholder: "Days"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority"
+      options:
+        - High
+        - Medium
+        - Low
+    validations:
+      required: false
+
