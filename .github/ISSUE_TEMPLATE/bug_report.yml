@@ -14,15 +14,6 @@ body:
     validations:
       required: true
 
-    - type: input
-    id: app-version
-    attributes:
-      label: App Version
-      description: Version of the app
-      placeholder: "e.g. 2.2.0"
-    validations:
-      required: true
-
   - type: textarea
     id: reproduce
     attributes:
@@ -44,6 +35,15 @@ body:
       placeholder: Describe the expected behavior...
     validations:
       required: false
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App Version
+      description: Version of the app
+      placeholder: "e.g. 2.2.0"
+    validations:
+      required: true
 
   - type: dropdown
     id: priority
