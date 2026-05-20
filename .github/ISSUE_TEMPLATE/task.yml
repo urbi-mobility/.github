@@ -1,6 +1,6 @@
 name: 🧩 Task
 description: Create a new task or sub-task for ongoing work.
-title: "[Task]: "
+title: "iOS / Android / BE [Tasktheme] - brief description "
 labels: ["task"]
 type: Task
 
